@@ -196,9 +196,9 @@ export default function ChineseHome() {
               icon={CarbonTimingBelt}
             />
             <CalcCard
-              to="/chains"
+              to="/zh/chains"
               title="链条计算器"
-              note="英文页面"
+              note="已提供中文界面"
               icon={EmojioneMonotoneChains}
             />
             <CalcCard

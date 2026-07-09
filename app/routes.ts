@@ -16,5 +16,6 @@ export default [
   route('about', 'routes/about.tsx'),
   route('zh', 'routes/zh/home.tsx'),
   route('zh/belts', 'routes/zh/belts.tsx'),
+  route('zh/chains', 'routes/zh/chains.tsx'),
   route('dev/error', 'routes/dev.error.tsx'),
 ] satisfies RouteConfig;

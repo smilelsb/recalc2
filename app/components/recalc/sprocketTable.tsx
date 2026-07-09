@@ -15,10 +15,24 @@ import Sprocket from '~/lib/models/Sprocket';
 import type { Bore, Vendor } from '~/lib/types/common';
 import type { ChainType, JSONSprocket } from '~/lib/types/sprockets';
 
+interface SprocketTableLabels {
+  title: string;
+  teeth: string;
+  bore: string;
+}
+
+const DEFAULT_SPROCKET_TABLE_LABELS: SprocketTableLabels = {
+  title: 'Matching COTS Sprockets',
+  teeth: 'Teeth',
+  bore: 'Bore',
+};
+
 export function SprocketTable({
   filterFn = () => true,
+  labels = DEFAULT_SPROCKET_TABLE_LABELS,
 }: {
   filterFn?: (sprocket: Sprocket) => boolean;
+  labels?: SprocketTableLabels;
 }) {
   const [allSprockets, setAllSprockets] = useState<JSONSprocket[] | null>(null);
   useEffect(() => {
@@ -74,13 +88,13 @@ export function SprocketTable({
         <TableHeader>
           <TableRow>
             <TableHead colSpan={6} className="bg-blue-50 text-center font-bold">
-              Matching COTS Sprockets
+              {labels.title}
             </TableHead>
           </TableRow>
           <TableRow>
             <TableHead className="bg-blue-50/50">SKU</TableHead>
-            <TableHead className="bg-blue-50/50">Teeth</TableHead>
-            <TableHead className="bg-blue-50/50">Bore</TableHead>
+            <TableHead className="bg-blue-50/50">{labels.teeth}</TableHead>
+            <TableHead className="bg-blue-50/50">{labels.bore}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
