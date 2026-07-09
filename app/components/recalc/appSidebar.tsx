@@ -72,8 +72,8 @@ const zhCalculatorLinks: SidebarLink[] = [
     icon: MoveVerticalIcon,
   },
   {
-    title: '机械臂计算器（英文）',
-    url: '/arm',
+    title: '机械臂计算器',
+    url: '/zh/arm',
     icon: StreamlineUltimateFactoryIndustrialRobotArm1,
   },
   { title: '飞轮计算器（英文）', url: '/flywheel', icon: Disc3Icon },

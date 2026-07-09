@@ -220,9 +220,9 @@ export default function ChineseHome() {
               icon={Disc3Icon}
             />
             <CalcCard
-              to="/arm"
+              to="/zh/arm"
               title="机械臂计算器"
-              note="英文页面"
+              note="已提供中文界面"
               icon={StreamlineUltimateFactoryIndustrialRobotArm1}
             />
             <CalcCard

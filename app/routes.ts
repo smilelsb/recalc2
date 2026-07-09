@@ -15,6 +15,7 @@ export default [
   route('privacy', 'routes/privacy.tsx'),
   route('about', 'routes/about.tsx'),
   route('zh', 'routes/zh/home.tsx'),
+  route('zh/arm', 'routes/zh/arm.tsx'),
   route('zh/belts', 'routes/zh/belts.tsx'),
   route('zh/chains', 'routes/zh/chains.tsx'),
   route('zh/linear', 'routes/zh/linear.tsx'),
