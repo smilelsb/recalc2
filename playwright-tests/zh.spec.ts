@@ -18,6 +18,15 @@ async function waitForArmCalc(page: Page) {
   );
 }
 
+async function waitForFlywheelCalc(page: Page) {
+  await page.waitForTimeout(100);
+  await expect(page.getByTestId('flywheel-main')).toHaveAttribute(
+    'data-calculating',
+    'false',
+    { timeout: 30000 },
+  );
+}
+
 test.describe('Simplified Chinese pages', () => {
   test('keeps the English home page unchanged', async ({ page }) => {
     await page.goto('/');
@@ -53,6 +62,9 @@ test.describe('Simplified Chinese pages', () => {
         .getByTestId('entrypoint')
         .getByRole('link', { name: /机械臂计算器/ }),
     ).toHaveAttribute('href', '/zh/arm');
+    await expect(
+      page.getByTestId('entrypoint').getByRole('link', { name: /飞轮计算器/ }),
+    ).toHaveAttribute('href', '/zh/flywheel');
     await expect(page.getByText('计算器').first()).toBeVisible();
   });
 
@@ -156,6 +168,32 @@ test.describe('Simplified Chinese pages', () => {
     ).toBeVisible();
   });
 
+  test('renders the Chinese flywheel calculator without changing motor names', async ({
+    page,
+  }) => {
+    await page.goto('/zh/flywheel');
+    await page.waitForLoadState('networkidle');
+    await waitForFlywheelCalc(page);
+
+    await expect(
+      page.getByRole('heading', { name: '飞轮计算器' }),
+    ).toBeVisible();
+    await expect(page.getByText('电机与电气')).toBeVisible();
+    await expect(page.getByRole('heading', { name: '发射轮' })).toBeVisible();
+    await expect(page.getByText('发射轮直径')).toBeVisible();
+    await expect(page.getByText('目标转速')).toBeVisible();
+    await expect(page.getByRole('heading', { name: '射出物' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: '仿真' })).toBeVisible();
+    await expect(page.getByText('射击分析')).toBeVisible();
+    await expect(page.getByText('机构优化')).toBeVisible();
+    await expect(page.getByRole('button', { name: '复制链接' })).toBeVisible();
+
+    await page.getByTestId('selectmotor').click();
+    await expect(
+      page.getByRole('option', { name: 'NEO', exact: true }),
+    ).toBeVisible();
+  });
+
   test('keeps the English belt calculator unchanged', async ({ page }) => {
     await page.goto('/belts');
     await page.waitForLoadState('networkidle');
@@ -208,5 +246,21 @@ test.describe('Simplified Chinese pages', () => {
     await expect(page.getByText('Arm Geometry')).toBeVisible();
     await expect(page.getByRole('button', { name: 'Copy Link' })).toBeVisible();
     await expect(page.getByText('机械臂计算器')).toHaveCount(0);
+  });
+
+  test('keeps the English flywheel calculator unchanged', async ({ page }) => {
+    await page.goto('/flywheel');
+    await page.waitForLoadState('networkidle');
+    await waitForFlywheelCalc(page);
+
+    await expect(
+      page.getByRole('heading', { name: 'Flywheel Calculator' }),
+    ).toBeVisible();
+    await expect(page.getByText('Motors & Electrical')).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: 'Shooter Wheel' }),
+    ).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Copy Link' })).toBeVisible();
+    await expect(page.getByText('飞轮计算器')).toHaveCount(0);
   });
 });

@@ -18,6 +18,7 @@ export default [
   route('zh/arm', 'routes/zh/arm.tsx'),
   route('zh/belts', 'routes/zh/belts.tsx'),
   route('zh/chains', 'routes/zh/chains.tsx'),
+  route('zh/flywheel', 'routes/zh/flywheel.tsx'),
   route('zh/linear', 'routes/zh/linear.tsx'),
   route('dev/error', 'routes/dev.error.tsx'),
 ] satisfies RouteConfig;

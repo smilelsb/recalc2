@@ -214,9 +214,9 @@ export default function ChineseHome() {
               icon={MoveVerticalIcon}
             />
             <CalcCard
-              to="/flywheel"
+              to="/zh/flywheel"
               title="飞轮计算器"
-              note="英文页面"
+              note="已提供中文界面"
               icon={Disc3Icon}
             />
             <CalcCard
