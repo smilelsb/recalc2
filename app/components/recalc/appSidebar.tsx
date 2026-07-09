@@ -63,13 +63,53 @@ const informationLinks: SidebarLink[] = [
   { title: 'About', url: '/about', icon: InfoIcon },
 ];
 
+const zhCalculatorLinks: SidebarLink[] = [
+  { title: '同步带计算器', url: '/zh/belts', icon: CarbonTimingBelt },
+  { title: '链条计算器（英文）', url: '/chains', icon: EmojioneMonotoneChains },
+  {
+    title: '直线机构计算器（英文）',
+    url: '/linear',
+    icon: MoveVerticalIcon,
+  },
+  {
+    title: '机械臂计算器（英文）',
+    url: '/arm',
+    icon: StreamlineUltimateFactoryIndustrialRobotArm1,
+  },
+  { title: '飞轮计算器（英文）', url: '/flywheel', icon: Disc3Icon },
+  {
+    title: '传动比查找器（英文）',
+    url: '/ratio-finder',
+    icon: SearchIcon,
+  },
+  {
+    title: '传动比计算器（英文）',
+    url: '/ratio',
+    icon: RatioIcon,
+  },
+  { title: '齿轮计算器（英文）', url: '/gears', icon: Fa7SolidGears },
+  { title: '拾取机构计算器（英文）', url: '/intake', icon: RotateCwIcon },
+];
+
+const zhInformationLinks: SidebarLink[] = [
+  { title: '电机参数（英文）', url: '/motors', icon: ZapIcon },
+  { title: '关于 ReCalc（英文）', url: '/about', icon: InfoIcon },
+];
+
 export function AppSidebar() {
   const location = useLocation();
   const currentPath = location.pathname;
+  const isZh = currentPath === '/zh' || currentPath.startsWith('/zh/');
+  const homeUrl = isZh ? '/zh' : '/';
+  const homeTitle = isZh ? '首页' : 'Home';
+  const calculatorGroupLabel = isZh ? '计算器' : 'Calculators';
+  const informationGroupLabel = isZh ? '信息' : 'Information';
+  const activeCalculatorLinks = isZh ? zhCalculatorLinks : calculatorLinks;
+  const activeInformationLinks = isZh ? zhInformationLinks : informationLinks;
 
   function isActive(url: string) {
-    if (url === '/') {
-      return currentPath === '/';
+    if (url === '/' || url === '/zh') {
+      return currentPath === url;
     }
     return currentPath.startsWith(url);
   }
@@ -80,11 +120,11 @@ export function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
-              isActive={isActive('/')}
+              isActive={isActive(homeUrl)}
               render={
-                <Link to="/">
+                <Link to={homeUrl}>
                   <Home className="size-4" />
-                  <span>Home</span>
+                  <span>{homeTitle}</span>
                 </Link>
               }
             />
@@ -93,10 +133,10 @@ export function AppSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Calculators</SidebarGroupLabel>
+          <SidebarGroupLabel>{calculatorGroupLabel}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {calculatorLinks.map((link) => {
+              {activeCalculatorLinks.map((link) => {
                 const Icon = link.icon;
                 return (
                   <SidebarMenuItem key={link.url}>
@@ -117,10 +157,10 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
         <SidebarGroup>
-          <SidebarGroupLabel>Information</SidebarGroupLabel>
+          <SidebarGroupLabel>{informationGroupLabel}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {informationLinks.map((link) => {
+              {activeInformationLinks.map((link) => {
                 const Icon = link.icon;
                 return (
                   <SidebarMenuItem key={link.url}>

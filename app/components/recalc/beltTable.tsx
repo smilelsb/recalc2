@@ -17,10 +17,26 @@ import type { Vendor } from '~/lib/types/common';
 
 const SKELETON_ROW_COUNT = 4;
 
+interface BeltTableLabels {
+  title: string;
+  teeth: string;
+  width: string;
+  empty: string;
+}
+
+const DEFAULT_BELT_TABLE_LABELS: BeltTableLabels = {
+  title: 'Matching COTS Belts',
+  teeth: 'Teeth',
+  width: 'Width',
+  empty: 'No matching belts found',
+};
+
 export function BeltTable({
   filterFn = () => true,
+  labels = DEFAULT_BELT_TABLE_LABELS,
 }: {
   filterFn?: (belt: Belt) => boolean;
+  labels?: BeltTableLabels;
 }) {
   const [allBelts, setAllBelts] = useState<JSONBelt[] | null>(null);
 
@@ -85,7 +101,7 @@ export function BeltTable({
               colSpan={3}
               className="bg-primary/8 text-center font-semibold text-foreground"
             >
-              <span>Matching COTS Belts</span>
+              <span>{labels.title}</span>
               {allBelts !== null && (
                 <span className="ml-2 rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
                   {belts.length}
@@ -98,10 +114,10 @@ export function BeltTable({
               SKU
             </TableHead>
             <TableHead className="bg-primary/4 text-xs font-medium tracking-wide text-muted-foreground uppercase">
-              Teeth
+              {labels.teeth}
             </TableHead>
             <TableHead className="bg-primary/4 text-xs font-medium tracking-wide text-muted-foreground uppercase">
-              Width
+              {labels.width}
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -129,7 +145,7 @@ export function BeltTable({
                 colSpan={3}
                 className="py-6 text-center text-sm text-muted-foreground"
               >
-                No matching belts found
+                {labels.empty}
               </TableCell>
             </TableRow>
           ) : (

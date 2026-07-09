@@ -22,9 +22,13 @@ function buildBorderPaths(w: number, h: number): [string, string] {
 export default function CalcHeading({
   title,
   getSerializedState,
+  copyLabel = 'Copy Link',
+  copiedLabel = 'Copied!',
 }: {
   title: string;
   getSerializedState: () => string;
+  copyLabel?: string;
+  copiedLabel?: string;
 }) {
   const [copied, setCopied] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -71,10 +75,10 @@ export default function CalcHeading({
               className="col-start-1 row-start-1 opacity-0 select-none"
               aria-hidden
             >
-              Copy Link
+              {copyLabel.length >= copiedLabel.length ? copyLabel : copiedLabel}
             </span>
             <span className="col-start-1 row-start-1">
-              {copied ? 'Copied!' : 'Copy Link'}
+              {copied ? copiedLabel : copyLabel}
             </span>
           </span>
         </Button>

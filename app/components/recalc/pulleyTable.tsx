@@ -18,10 +18,28 @@ import type { JSONPulley } from '~/lib/types/pulleys';
 
 const SKELETON_ROW_COUNT = 4;
 
+interface PulleyTableLabels {
+  title: string;
+  teeth: string;
+  width: string;
+  bore: string;
+  empty: string;
+}
+
+const DEFAULT_PULLEY_TABLE_LABELS: PulleyTableLabels = {
+  title: 'Matching COTS Pulleys',
+  teeth: 'Teeth',
+  width: 'Width',
+  bore: 'Bore',
+  empty: 'No matching pulleys found',
+};
+
 export function PulleyTable({
   filterFn = () => true,
+  labels = DEFAULT_PULLEY_TABLE_LABELS,
 }: {
   filterFn?: (pulley: Pulley) => boolean;
+  labels?: PulleyTableLabels;
 }) {
   const [allPulleys, setAllPulleys] = useState<JSONPulley[] | null>(null);
   useEffect(() => {
@@ -80,7 +98,7 @@ export function PulleyTable({
               colSpan={4}
               className="bg-primary/8 text-center font-semibold text-foreground"
             >
-              <span>Matching COTS Pulleys</span>
+              <span>{labels.title}</span>
               {allPulleys !== null && (
                 <span className="ml-2 rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
                   {pulleys.length}
@@ -93,13 +111,13 @@ export function PulleyTable({
               SKU
             </TableHead>
             <TableHead className="bg-primary/4 text-xs font-medium tracking-wide text-muted-foreground uppercase">
-              Teeth
+              {labels.teeth}
             </TableHead>
             <TableHead className="bg-primary/4 text-xs font-medium tracking-wide text-muted-foreground uppercase">
-              Width
+              {labels.width}
             </TableHead>
             <TableHead className="bg-primary/4 text-xs font-medium tracking-wide text-muted-foreground uppercase">
-              Bore
+              {labels.bore}
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -130,7 +148,7 @@ export function PulleyTable({
                 colSpan={4}
                 className="py-6 text-center text-sm text-muted-foreground"
               >
-                No matching pulleys found
+                {labels.empty}
               </TableCell>
             </TableRow>
           ) : (

@@ -1,6 +1,13 @@
 import { NuqsAdapter } from 'nuqs/adapters/react-router/v7';
 import { type ReactNode, useEffect } from 'react';
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
+import {
+  Links,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useLocation,
+} from 'react-router';
 
 import '~/app.css';
 import { AppSidebar } from '~/components/recalc/appSidebar';
@@ -39,8 +46,11 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: ReactNode }) {
+  const { pathname } = useLocation();
+  const isZh = pathname === '/zh' || pathname.startsWith('/zh/');
+
   return (
-    <html lang="en">
+    <html lang={isZh ? 'zh-CN' : 'en'}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
