@@ -67,8 +67,8 @@ const zhCalculatorLinks: SidebarLink[] = [
   { title: '同步带计算器', url: '/zh/belts', icon: CarbonTimingBelt },
   { title: '链条计算器', url: '/zh/chains', icon: EmojioneMonotoneChains },
   {
-    title: '直线机构计算器（英文）',
-    url: '/linear',
+    title: '直线机构计算器',
+    url: '/zh/linear',
     icon: MoveVerticalIcon,
   },
   {

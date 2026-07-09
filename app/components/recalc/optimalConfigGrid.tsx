@@ -19,7 +19,35 @@ interface OptimalConfigGridProps {
   userSupplyAmps: number;
   selectedCell: ConfigOptResult | null;
   onSelectCell: (cell: ConfigOptResult | null) => void;
+  labels?: OptimalConfigGridLabels;
 }
+
+interface OptimalConfigGridLabels {
+  title: string;
+  loading: string;
+  configCount: string;
+  noSuccessfulConfigurations: string;
+  description: string;
+  allMetrics: string;
+  supply: string;
+  stator: string;
+  peak: string;
+  avg: string;
+}
+
+const DEFAULT_OPTIMAL_CONFIG_GRID_LABELS: OptimalConfigGridLabels = {
+  title: 'Optimal Configuration Grid',
+  loading: 'Simulating configurations...',
+  configCount: 'configs',
+  noSuccessfulConfigurations:
+    'No successful configurations found. Try adjusting your inputs.',
+  description: 'Best gear ratio per current limit combination',
+  allMetrics: 'All metrics',
+  supply: 'Supply',
+  stator: 'Stator',
+  peak: 'peak',
+  avg: 'avg',
+};
 
 function getTimeBgClass(normalized: number): string {
   if (normalized < 0.2) return 'bg-primary text-primary-foreground';
@@ -36,6 +64,7 @@ interface GridCellProps {
   expanded: boolean;
   normalizedTime: number;
   onSelect: () => void;
+  labels: OptimalConfigGridLabels;
 }
 
 function GridCell({
@@ -45,6 +74,7 @@ function GridCell({
   expanded,
   normalizedTime,
   onSelect,
+  labels,
 }: GridCellProps) {
   const bgClass = getTimeBgClass(normalizedTime);
   const avgPower =
@@ -73,9 +103,13 @@ function GridCell({
       </div>
       {expanded && (
         <div className="flex flex-col gap-0.5 px-2 pt-1 pb-2 text-[10px] tabular-nums opacity-80">
-          <div>{cell.peakCurrentAmps.toFixed(1)}A peak</div>
+          <div>
+            {cell.peakCurrentAmps.toFixed(1)}A {labels.peak}
+          </div>
           <div>{cell.energyJoules.toFixed(1)}J</div>
-          <div>{avgPower.toFixed(1)}W avg</div>
+          <div>
+            {avgPower.toFixed(1)}W {labels.avg}
+          </div>
         </div>
       )}
     </button>
@@ -88,6 +122,7 @@ export function OptimalConfigGrid({
   userSupplyAmps,
   selectedCell,
   onSelectCell,
+  labels = DEFAULT_OPTIMAL_CONFIG_GRID_LABELS,
 }: OptimalConfigGridProps) {
   const [expanded, setExpanded] = useState(false);
 
@@ -99,16 +134,14 @@ export function OptimalConfigGrid({
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-sm font-semibold">
-              Optimal Configuration Grid
-            </h2>
+            <h2 className="text-sm font-semibold">{labels.title}</h2>
             <p className="animate-pulse text-xs text-muted-foreground">
-              Simulating configurations&hellip;
+              {labels.loading}
             </p>
           </div>
           <Badge variant="outline" className="gap-1 text-xs opacity-40">
             <TrendingUpIcon className="size-3" />
-            &mdash; configs
+            &mdash; {labels.configCount}
           </Badge>
         </div>
 
@@ -164,7 +197,7 @@ export function OptimalConfigGrid({
       <Card>
         <CardContent className="p-4">
           <p className="text-sm text-muted-foreground">
-            No successful configurations found. Try adjusting your inputs.
+            {labels.noSuccessfulConfigurations}
           </p>
         </CardContent>
       </Card>
@@ -195,10 +228,8 @@ export function OptimalConfigGrid({
       {/* Header */}
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-sm font-semibold">Optimal Configuration Grid</h2>
-          <p className="text-xs text-muted-foreground">
-            Best gear ratio per current limit combination
-          </p>
+          <h2 className="text-sm font-semibold">{labels.title}</h2>
+          <p className="text-xs text-muted-foreground">{labels.description}</p>
         </div>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
@@ -211,12 +242,12 @@ export function OptimalConfigGrid({
               htmlFor="expand-metrics"
               className="cursor-pointer text-xs text-muted-foreground"
             >
-              All metrics
+              {labels.allMetrics}
             </Label>
           </div>
           <Badge variant="outline" className="gap-1 text-xs">
             <TrendingUpIcon className="size-3" />
-            {successResults.length} configs
+            {successResults.length} {labels.configCount}
           </Badge>
         </div>
       </div>
@@ -245,7 +276,9 @@ export function OptimalConfigGrid({
                   >
                     {supply}A
                   </span>
-                  <p className="text-[10px] text-muted-foreground/70">Supply</p>
+                  <p className="text-[10px] text-muted-foreground/70">
+                    {labels.supply}
+                  </p>
                 </div>
               ))}
             </div>
@@ -272,7 +305,7 @@ export function OptimalConfigGrid({
                       {stator}A
                     </span>
                     <p className="text-[10px] text-muted-foreground/70">
-                      Stator
+                      {labels.stator}
                     </p>
                   </div>
                 </div>
@@ -310,6 +343,7 @@ export function OptimalConfigGrid({
                       expanded={expanded}
                       normalizedTime={normalizedTime}
                       onSelect={() => onSelectCell(isSelected ? null : cell)}
+                      labels={labels}
                     />
                   );
                 })}

@@ -1,4 +1,13 @@
-import { expect, test } from '@playwright/test';
+import { type Page, expect, test } from '@playwright/test';
+
+async function waitForLinearCalc(page: Page) {
+  await page.waitForTimeout(100);
+  await expect(page.getByTestId('linear-main')).toHaveAttribute(
+    'data-calculating',
+    'false',
+    { timeout: 30000 },
+  );
+}
 
 test.describe('Simplified Chinese pages', () => {
   test('keeps the English home page unchanged', async ({ page }) => {
@@ -25,6 +34,11 @@ test.describe('Simplified Chinese pages', () => {
     await expect(
       page.getByTestId('entrypoint').getByRole('link', { name: /链条计算器/ }),
     ).toHaveAttribute('href', '/zh/chains');
+    await expect(
+      page
+        .getByTestId('entrypoint')
+        .getByRole('link', { name: /直线机构计算器/ }),
+    ).toHaveAttribute('href', '/zh/linear');
     await expect(page.getByText('计算器').first()).toBeVisible();
   });
 
@@ -78,6 +92,31 @@ test.describe('Simplified Chinese pages', () => {
     await expect(page.getByRole('option', { name: '#35' })).toBeVisible();
   });
 
+  test('renders the Chinese linear mechanism calculator without changing motor names', async ({
+    page,
+  }) => {
+    await page.goto('/zh/linear');
+    await page.waitForLoadState('networkidle');
+    await waitForLinearCalc(page);
+
+    await expect(
+      page.getByRole('heading', { name: '直线机构计算器' }),
+    ).toBeVisible();
+    await expect(page.getByText('电机与传动')).toBeVisible();
+    await expect(page.getByText('级联')).toBeVisible();
+    await expect(page.getByText('负载与行程')).toBeVisible();
+    await expect(page.getByText('行程距离')).toBeVisible();
+    await expect(page.getByText('线轴直径')).toBeVisible();
+    await expect(page.getByRole('heading', { name: '仿真' })).toBeVisible();
+    await expect(page.getByText('机构优化')).toBeVisible();
+    await expect(page.getByRole('button', { name: '复制链接' })).toBeVisible();
+
+    await page.getByTestId('selectmotor').click();
+    await expect(
+      page.getByRole('option', { name: 'NEO', exact: true }),
+    ).toBeVisible();
+  });
+
   test('keeps the English belt calculator unchanged', async ({ page }) => {
     await page.goto('/belts');
     await page.waitForLoadState('networkidle');
@@ -102,5 +141,19 @@ test.describe('Simplified Chinese pages', () => {
     await expect(page.getByText('Matching COTS Sprockets')).toBeVisible();
     await expect(page.getByRole('button', { name: 'Copy Link' })).toBeVisible();
     await expect(page.getByText('链条计算器')).toHaveCount(0);
+  });
+
+  test('keeps the English linear calculator unchanged', async ({ page }) => {
+    await page.goto('/linear');
+    await page.waitForLoadState('networkidle');
+    await waitForLinearCalc(page);
+
+    await expect(
+      page.getByRole('heading', { name: 'Linear Motion Calculator' }),
+    ).toBeVisible();
+    await expect(page.getByText('Motor & Gearing')).toBeVisible();
+    await expect(page.getByText('Travel Distance')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Copy Link' })).toBeVisible();
+    await expect(page.getByText('直线机构计算器')).toHaveCount(0);
   });
 });

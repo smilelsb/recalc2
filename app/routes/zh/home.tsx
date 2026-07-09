@@ -208,9 +208,9 @@ export default function ChineseHome() {
               icon={Fa7SolidGears}
             />
             <CalcCard
-              to="/linear"
+              to="/zh/linear"
               title="直线机构计算器"
-              note="英文页面"
+              note="已提供中文界面"
               icon={MoveVerticalIcon}
             />
             <CalcCard
