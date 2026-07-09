@@ -38,8 +38,14 @@ test.describe('Simplified Chinese pages', () => {
     await expect(entrypoint.getByText('参数')).toBeVisible();
     await expect(page.getByText('使用自定义同步带')).toBeVisible();
     await expect(page.getByText('目标中心距')).toBeVisible();
+    await expect(page.getByTestId('selectdesiredCenter')).toContainText('mm');
+    await expect(page.getByTestId('beltToothIncrement')).toHaveValue('1');
+    await expect(page.getByText('同步带轮 1')).toBeVisible();
     await expect(page.getByText('较小同步带')).toBeVisible();
-    await expect(page.getByText('匹配的 COTS 同步带')).toBeVisible();
+    await expect(page.getByText('匹配的 COTS 同步带轮')).toBeVisible();
+    await expect(
+      page.getByText('匹配的 COTS 同步带', { exact: true }),
+    ).toBeVisible();
     await expect(page.getByRole('button', { name: '复制链接' })).toBeVisible();
 
     await expect(page.getByRole('button', { name: 'GT2 (3mm)' })).toBeVisible();

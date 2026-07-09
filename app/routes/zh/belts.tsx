@@ -33,7 +33,7 @@ const BELT_PATH = '/zh/belts';
 const BELT_TITLE = '同步带计算器 | ReCalc 中文版';
 const BELT_NAME = '同步带计算器';
 const BELT_DESCRIPTION =
-  '用于 FRC 和 FTC 机器人同步带传动设计的中文计算器，可估算中心距、同步带长度，并查找兼容的 COTS 同步轮与同步带组合。';
+  '用于 FRC 和 FTC 机器人同步带传动设计的中文计算器，可估算中心距、同步带长度，并查找兼容的 COTS 同步带轮与同步带组合。';
 
 export function meta() {
   return [
@@ -62,12 +62,12 @@ export function meta() {
 
 const DEFAULT_PARAMS = {
   customBeltTeeth: NumberParam.withDefault(125),
-  desiredCenter: MeasurementParam.withDefault(new Measurement(5, 'in')),
+  desiredCenter: MeasurementParam.withDefault(new Measurement(127, 'mm')),
   extraCenter: MeasurementParam.withDefault(new Measurement(0, 'mm')),
   p1Teeth: NumberParam.withDefault(16),
   p2Teeth: NumberParam.withDefault(24),
   pitch: MeasurementParam.withDefault(new Measurement(5, 'mm')),
-  toothIncrement: NumberParam.withDefault(5),
+  toothIncrement: NumberParam.withDefault(1),
   useCustomBelt: BooleanParam.withDefault(false),
 };
 
@@ -266,7 +266,7 @@ export default function ChineseBelts() {
             <Card className="flex-1 gap-2 shadow-sm">
               <CardHeader className="pb-2">
                 <CardTitle className="border-l-2 border-primary/50 pl-3">
-                  同步轮 1
+                  同步带轮 1
                 </CardTitle>
               </CardHeader>
               <CardContent className="flex flex-col gap-y-2 pt-2">
@@ -279,7 +279,7 @@ export default function ChineseBelts() {
                 <MeasurementDisplayOutput
                   state={p1PitchDiameter}
                   label="节圆直径"
-                  defaultUnit="in"
+                  defaultUnit="mm"
                   testId="p1PitchDiameter"
                 />
               </CardContent>
@@ -288,7 +288,7 @@ export default function ChineseBelts() {
             <Card className="flex-1 gap-2 shadow-sm">
               <CardHeader className="pb-2">
                 <CardTitle className="border-l-2 border-primary/50 pl-3">
-                  同步轮 2
+                  同步带轮 2
                 </CardTitle>
               </CardHeader>
               <CardContent className="flex flex-col gap-y-2 pt-2">
@@ -301,7 +301,7 @@ export default function ChineseBelts() {
                 <MeasurementDisplayOutput
                   state={p2PitchDiameter}
                   label="节圆直径"
-                  defaultUnit="in"
+                  defaultUnit="mm"
                   testId="p2PitchDiameter"
                 />
               </CardContent>
@@ -337,11 +337,11 @@ export default function ChineseBelts() {
           <PulleyTable
             filterFn={pulleyFilter}
             labels={{
-              title: '匹配的 COTS 同步轮',
+              title: '匹配的 COTS 同步带轮',
               teeth: '齿数',
               width: '宽度',
               bore: '轴孔',
-              empty: '未找到匹配的同步轮',
+              empty: '未找到匹配的同步带轮',
             }}
           />
           <BeltTable
@@ -403,7 +403,7 @@ function BeltResultCard({
         <MeasurementDisplayOutput
           state={centerDistance}
           label="中心距"
-          defaultUnit="in"
+          defaultUnit="mm"
           testId={`${testPrefix}Center`}
         />
         <NumberDisplayOutput
@@ -420,14 +420,14 @@ function BeltResultCard({
         />
         <MeasurementDisplayOutput
           state={gapBetweenPulleys}
-          label="同步轮间隙"
-          defaultUnit="in"
+          label="同步带轮间隙"
+          defaultUnit="mm"
           testId={`${testPrefix}PulleyGap`}
         />
         <MeasurementDisplayOutput
           state={differenceFromTarget}
           label="与目标差值"
-          defaultUnit="in"
+          defaultUnit="mm"
           testId={`${testPrefix}DiffFromTarget`}
         />
       </CardContent>
