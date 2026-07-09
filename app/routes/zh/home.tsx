@@ -226,7 +226,7 @@ export default function ChineseHome() {
               icon={StreamlineUltimateFactoryIndustrialRobotArm1}
             />
             <CalcCard
-              to="/intake"
+              to="/zh/intake"
               title="拾取机构计算器"
               note="Intake Calculator"
               icon={RotateCwIcon}

@@ -88,7 +88,7 @@ const zhCalculatorLinks: SidebarLink[] = [
     icon: RatioIcon,
   },
   { title: '齿轮计算器', url: '/zh/gears', icon: Fa7SolidGears },
-  { title: '拾取机构计算器（英文）', url: '/intake', icon: RotateCwIcon },
+  { title: '拾取机构计算器', url: '/zh/intake', icon: RotateCwIcon },
 ];
 
 const zhInformationLinks: SidebarLink[] = [

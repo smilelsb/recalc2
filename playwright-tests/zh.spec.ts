@@ -80,6 +80,11 @@ test.describe('Simplified Chinese pages', () => {
     await expect(
       page
         .getByTestId('entrypoint')
+        .getByRole('link', { name: /拾取机构计算器/ }),
+    ).toHaveAttribute('href', '/zh/intake');
+    await expect(
+      page
+        .getByTestId('entrypoint')
         .getByRole('link', { name: /传动比查找器/ }),
     ).toHaveAttribute('href', '/zh/ratio-finder');
     await expect(
@@ -287,6 +292,30 @@ test.describe('Simplified Chinese pages', () => {
     await expect(page.getByText('SKU')).toBeVisible();
   });
 
+  test('renders the Chinese intake calculator without changing motor names', async ({
+    page,
+  }) => {
+    await page.goto('/zh/intake');
+    await page.waitForLoadState('networkidle');
+
+    await expect(
+      page.getByRole('heading', { name: '拾取机构计算器' }),
+    ).toBeVisible();
+    await expect(page.getByText('电机与传动')).toBeVisible();
+    await expect(page.getByRole('heading', { name: '滚轮' })).toBeVisible();
+    await expect(page.getByText('滚轮直径')).toBeVisible();
+    await expect(page.getByText('输送距离')).toBeVisible();
+    await expect(page.getByText('反向计算')).toBeVisible();
+    await expect(page.getByText('每个电机的建议传动比')).toBeVisible();
+    await expect(page.getByText('线速度')).toBeVisible();
+    await expect(page.getByText('到达目标时间')).toBeVisible();
+    await expect(page.getByRole('button', { name: '复制链接' })).toBeVisible();
+
+    await expect(page.getByRole('combobox').first()).toContainText(
+      'Kraken X60 (FOC)',
+    );
+  });
+
   test('keeps the English belt calculator unchanged', async ({ page }) => {
     await page.goto('/belts');
     await page.waitForLoadState('networkidle');
@@ -326,6 +355,20 @@ test.describe('Simplified Chinese pages', () => {
     await expect(page.getByText('Matching COTS Gears')).toBeVisible();
     await expect(page.getByRole('button', { name: 'Copy Link' })).toBeVisible();
     await expect(page.getByText('齿轮计算器')).toHaveCount(0);
+  });
+
+  test('keeps the English intake calculator unchanged', async ({ page }) => {
+    await page.goto('/intake');
+    await page.waitForLoadState('networkidle');
+
+    await expect(
+      page.getByRole('heading', { name: 'Intake Calculator' }),
+    ).toBeVisible();
+    await expect(page.getByText('Motor & Gearing')).toBeVisible();
+    await expect(page.getByText('Roller Diameter')).toBeVisible();
+    await expect(page.getByText('Recommended Ratios per Motor')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Copy Link' })).toBeVisible();
+    await expect(page.getByText('拾取机构计算器')).toHaveCount(0);
   });
 
   test('keeps the English linear calculator unchanged', async ({ page }) => {
