@@ -20,6 +20,7 @@ export default [
   route('zh/chains', 'routes/zh/chains.tsx'),
   route('zh/flywheel', 'routes/zh/flywheel.tsx'),
   route('zh/linear', 'routes/zh/linear.tsx'),
+  route('zh/ratio', 'routes/zh/ratio.tsx'),
   route('zh/ratio-finder', 'routes/zh/ratio-finder.tsx'),
   route('dev/error', 'routes/dev.error.tsx'),
 ] satisfies RouteConfig;

@@ -83,8 +83,8 @@ const zhCalculatorLinks: SidebarLink[] = [
     icon: SearchIcon,
   },
   {
-    title: '传动比计算器（英文）',
-    url: '/ratio',
+    title: '传动比计算器',
+    url: '/zh/ratio',
     icon: RatioIcon,
   },
   { title: '齿轮计算器（英文）', url: '/gears', icon: Fa7SolidGears },

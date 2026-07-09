@@ -79,6 +79,11 @@ test.describe('Simplified Chinese pages', () => {
         .getByTestId('entrypoint')
         .getByRole('link', { name: /传动比查找器/ }),
     ).toHaveAttribute('href', '/zh/ratio-finder');
+    await expect(
+      page
+        .getByTestId('entrypoint')
+        .getByRole('link', { name: /传动比计算器/ }),
+    ).toHaveAttribute('href', '/zh/ratio');
     await expect(page.getByText('计算器').first()).toBeVisible();
   });
 
@@ -230,6 +235,24 @@ test.describe('Simplified Chinese pages', () => {
     await expect(page.getByRole('checkbox', { name: 'REV' })).toBeVisible();
   });
 
+  test('renders the Chinese ratio calculator', async ({ page }) => {
+    await page.goto('/zh/ratio');
+    await page.waitForLoadState('networkidle');
+
+    await expect(
+      page.getByRole('heading', { name: '传动比计算器' }),
+    ).toBeVisible();
+    await expect(page.getByText('级数')).toBeVisible();
+    await expect(page.getByText('主动齿数')).toBeVisible();
+    await expect(page.getByText('从动齿数')).toBeVisible();
+    await expect(
+      page.getByTestId('entrypoint').getByText('结果', { exact: true }),
+    ).toBeVisible();
+    await expect(page.getByText('电机转速')).toBeVisible();
+    await expect(page.getByRole('button', { name: '添加一级' })).toBeVisible();
+    await expect(page.getByRole('button', { name: '复制链接' })).toBeVisible();
+  });
+
   test('keeps the English belt calculator unchanged', async ({ page }) => {
     await page.goto('/belts');
     await page.waitForLoadState('networkidle');
@@ -312,5 +335,18 @@ test.describe('Simplified Chinese pages', () => {
     await expect(page.getByText('Tooth Ranges')).toBeVisible();
     await expect(page.getByRole('button', { name: 'Copy Link' })).toBeVisible();
     await expect(page.getByText('传动比查找器')).toHaveCount(0);
+  });
+
+  test('keeps the English ratio calculator unchanged', async ({ page }) => {
+    await page.goto('/ratio');
+    await page.waitForLoadState('networkidle');
+
+    await expect(
+      page.getByRole('heading', { name: 'Ratio Calculator' }),
+    ).toBeVisible();
+    await expect(page.getByText('Stages')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Add Stage' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Copy Link' })).toBeVisible();
+    await expect(page.getByText('传动比计算器')).toHaveCount(0);
   });
 });

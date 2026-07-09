@@ -238,9 +238,9 @@ export default function ChineseHome() {
               icon={SearchIcon}
             />
             <CalcCard
-              to="/ratio"
+              to="/zh/ratio"
               title="传动比计算器"
-              note="英文页面"
+              note="已提供中文界面"
               icon={RatioIcon}
             />
           </div>
