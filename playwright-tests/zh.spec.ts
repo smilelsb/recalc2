@@ -27,6 +27,15 @@ async function waitForFlywheelCalc(page: Page) {
   );
 }
 
+async function waitForRatioFinder(page: Page) {
+  await page.waitForTimeout(100);
+  await expect(page.getByTestId('ratio-finder-page')).toHaveAttribute(
+    'data-calculating',
+    'false',
+    { timeout: 30000 },
+  );
+}
+
 test.describe('Simplified Chinese pages', () => {
   test('keeps the English home page unchanged', async ({ page }) => {
     await page.goto('/');
@@ -65,6 +74,11 @@ test.describe('Simplified Chinese pages', () => {
     await expect(
       page.getByTestId('entrypoint').getByRole('link', { name: /飞轮计算器/ }),
     ).toHaveAttribute('href', '/zh/flywheel');
+    await expect(
+      page
+        .getByTestId('entrypoint')
+        .getByRole('link', { name: /传动比查找器/ }),
+    ).toHaveAttribute('href', '/zh/ratio-finder');
     await expect(page.getByText('计算器').first()).toBeVisible();
   });
 
@@ -194,6 +208,28 @@ test.describe('Simplified Chinese pages', () => {
     ).toBeVisible();
   });
 
+  test('renders the Chinese ratio finder without changing product identifiers', async ({
+    page,
+  }) => {
+    await page.goto('/zh/ratio-finder');
+    await page.waitForLoadState('networkidle');
+    await waitForRatioFinder(page);
+
+    await expect(
+      page.getByRole('heading', { name: '传动比查找器' }),
+    ).toBeVisible();
+    await expect(page.getByText('目标设置')).toBeVisible();
+    await expect(page.getByText('齿数范围')).toBeVisible();
+    await expect(page.getByRole('heading', { name: '筛选' })).toBeVisible();
+    await expect(page.getByText('每级传动类型')).toBeVisible();
+    await expect(page.getByText(/\d+ 个方案/)).toBeVisible();
+    await expect(page.getByRole('button', { name: '复制链接' })).toBeVisible();
+
+    await expect(page.getByRole('checkbox', { name: '20DP' })).toBeVisible();
+    await expect(page.getByRole('checkbox', { name: 'GT2' })).toBeVisible();
+    await expect(page.getByRole('checkbox', { name: 'REV' })).toBeVisible();
+  });
+
   test('keeps the English belt calculator unchanged', async ({ page }) => {
     await page.goto('/belts');
     await page.waitForLoadState('networkidle');
@@ -262,5 +298,19 @@ test.describe('Simplified Chinese pages', () => {
     ).toBeVisible();
     await expect(page.getByRole('button', { name: 'Copy Link' })).toBeVisible();
     await expect(page.getByText('飞轮计算器')).toHaveCount(0);
+  });
+
+  test('keeps the English ratio finder unchanged', async ({ page }) => {
+    await page.goto('/ratio-finder');
+    await page.waitForLoadState('networkidle');
+    await waitForRatioFinder(page);
+
+    await expect(
+      page.getByRole('heading', { name: 'Ratio Finder' }),
+    ).toBeVisible();
+    await expect(page.getByText('Target Settings')).toBeVisible();
+    await expect(page.getByText('Tooth Ranges')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Copy Link' })).toBeVisible();
+    await expect(page.getByText('传动比查找器')).toHaveCount(0);
   });
 });

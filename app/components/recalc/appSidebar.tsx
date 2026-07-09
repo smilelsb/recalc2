@@ -78,8 +78,8 @@ const zhCalculatorLinks: SidebarLink[] = [
   },
   { title: '飞轮计算器', url: '/zh/flywheel', icon: Disc3Icon },
   {
-    title: '传动比查找器（英文）',
-    url: '/ratio-finder',
+    title: '传动比查找器',
+    url: '/zh/ratio-finder',
     icon: SearchIcon,
   },
   {

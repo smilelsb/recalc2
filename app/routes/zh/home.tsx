@@ -232,9 +232,9 @@ export default function ChineseHome() {
               icon={RotateCwIcon}
             />
             <CalcCard
-              to="/ratio-finder"
+              to="/zh/ratio-finder"
               title="传动比查找器"
-              note="英文页面"
+              note="已提供中文界面"
               icon={SearchIcon}
             />
             <CalcCard
