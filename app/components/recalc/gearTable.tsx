@@ -18,10 +18,26 @@ import type { JSONGear } from '~/lib/types/gears';
 
 const SKELETON_ROW_COUNT = 4;
 
+interface GearTableLabels {
+  title: string;
+  teeth: string;
+  bore: string;
+  noMatchingGears: string;
+}
+
+const DEFAULT_GEAR_TABLE_LABELS: GearTableLabels = {
+  title: 'Matching COTS Gears',
+  teeth: 'Teeth',
+  bore: 'Bore',
+  noMatchingGears: 'No matching gears found',
+};
+
 export function GearTable({
   filterFn = () => true,
+  labels = DEFAULT_GEAR_TABLE_LABELS,
 }: {
   filterFn?: (gear: Gear) => boolean;
+  labels?: GearTableLabels;
 }) {
   const [allGears, setAllGears] = useState<JSONGear[] | null>(null);
   useEffect(() => {
@@ -66,7 +82,7 @@ export function GearTable({
               colSpan={3}
               className="bg-primary/8 text-center font-semibold text-foreground"
             >
-              <span>Matching COTS Gears</span>
+              <span>{labels.title}</span>
               {allGears !== null && (
                 <span className="ml-2 rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
                   {gears.length}
@@ -79,10 +95,10 @@ export function GearTable({
               SKU
             </TableHead>
             <TableHead className="bg-primary/4 text-xs font-medium tracking-wide text-muted-foreground uppercase">
-              Teeth
+              {labels.teeth}
             </TableHead>
             <TableHead className="bg-primary/4 text-xs font-medium tracking-wide text-muted-foreground uppercase">
-              Bore
+              {labels.bore}
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -110,7 +126,7 @@ export function GearTable({
                 colSpan={3}
                 className="py-6 text-center text-sm text-muted-foreground"
               >
-                No matching gears found
+                {labels.noMatchingGears}
               </TableCell>
             </TableRow>
           ) : (

@@ -192,55 +192,55 @@ export default function ChineseHome() {
             <CalcCard
               to="/zh/belts"
               title="同步带计算器"
-              note="已提供中文界面"
+              note="Belt Calculator"
               icon={CarbonTimingBelt}
             />
             <CalcCard
               to="/zh/chains"
               title="链条计算器"
-              note="已提供中文界面"
+              note="Chain Calculator"
               icon={EmojioneMonotoneChains}
             />
             <CalcCard
-              to="/gears"
+              to="/zh/gears"
               title="齿轮计算器"
-              note="英文页面"
+              note="Gears Calculator"
               icon={Fa7SolidGears}
             />
             <CalcCard
               to="/zh/linear"
               title="直线机构计算器"
-              note="已提供中文界面"
+              note="Linear Mechanism Calculator"
               icon={MoveVerticalIcon}
             />
             <CalcCard
               to="/zh/flywheel"
               title="飞轮计算器"
-              note="已提供中文界面"
+              note="Flywheel Calculator"
               icon={Disc3Icon}
             />
             <CalcCard
               to="/zh/arm"
               title="机械臂计算器"
-              note="已提供中文界面"
+              note="Arm Calculator"
               icon={StreamlineUltimateFactoryIndustrialRobotArm1}
             />
             <CalcCard
               to="/intake"
               title="拾取机构计算器"
-              note="英文页面"
+              note="Intake Calculator"
               icon={RotateCwIcon}
             />
             <CalcCard
               to="/zh/ratio-finder"
               title="传动比查找器"
-              note="已提供中文界面"
+              note="Ratio Finder"
               icon={SearchIcon}
             />
             <CalcCard
               to="/zh/ratio"
               title="传动比计算器"
-              note="已提供中文界面"
+              note="Ratio Calculator"
               icon={RatioIcon}
             />
           </div>

@@ -62,6 +62,9 @@ test.describe('Simplified Chinese pages', () => {
       page.getByTestId('entrypoint').getByRole('link', { name: /链条计算器/ }),
     ).toHaveAttribute('href', '/zh/chains');
     await expect(
+      page.getByTestId('entrypoint').getByRole('link', { name: /齿轮计算器/ }),
+    ).toHaveAttribute('href', '/zh/gears');
+    await expect(
       page
         .getByTestId('entrypoint')
         .getByRole('link', { name: /直线机构计算器/ }),
@@ -84,6 +87,16 @@ test.describe('Simplified Chinese pages', () => {
         .getByTestId('entrypoint')
         .getByRole('link', { name: /传动比计算器/ }),
     ).toHaveAttribute('href', '/zh/ratio');
+    await expect(page.getByText('Belt Calculator')).toBeVisible();
+    await expect(page.getByText('Chain Calculator')).toBeVisible();
+    await expect(page.getByText('Gears Calculator')).toBeVisible();
+    await expect(page.getByText('Linear Mechanism Calculator')).toBeVisible();
+    await expect(page.getByText('Flywheel Calculator')).toBeVisible();
+    await expect(page.getByText('Arm Calculator')).toBeVisible();
+    await expect(page.getByText('Intake Calculator')).toBeVisible();
+    await expect(page.getByText('Ratio Finder')).toBeVisible();
+    await expect(page.getByText('Ratio Calculator')).toBeVisible();
+    await expect(page.getByText('已提供中文界面')).toHaveCount(0);
     await expect(page.getByText('计算器').first()).toBeVisible();
   });
 
@@ -253,6 +266,27 @@ test.describe('Simplified Chinese pages', () => {
     await expect(page.getByRole('button', { name: '复制链接' })).toBeVisible();
   });
 
+  test('renders the Chinese gears calculator without changing product identifiers', async ({
+    page,
+  }) => {
+    await page.goto('/zh/gears');
+    await page.waitForLoadState('networkidle');
+
+    await expect(
+      page.getByRole('heading', { name: '齿轮计算器' }),
+    ).toBeVisible();
+    await expect(
+      page.getByTestId('entrypoint').getByText('参数'),
+    ).toBeVisible();
+    await expect(page.getByText('齿轮 1 齿数')).toBeVisible();
+    await expect(page.getByText('齿轮 2 齿数')).toBeVisible();
+    await expect(page.getByText('Gear DP')).toBeVisible();
+    await expect(page.getByText('中心距', { exact: true })).toBeVisible();
+    await expect(page.getByText('匹配的 COTS 齿轮')).toBeVisible();
+    await expect(page.getByRole('link', { name: 'WCP-1720' })).toHaveCount(2);
+    await expect(page.getByText('SKU')).toBeVisible();
+  });
+
   test('keeps the English belt calculator unchanged', async ({ page }) => {
     await page.goto('/belts');
     await page.waitForLoadState('networkidle');
@@ -277,6 +311,21 @@ test.describe('Simplified Chinese pages', () => {
     await expect(page.getByText('Matching COTS Sprockets')).toBeVisible();
     await expect(page.getByRole('button', { name: 'Copy Link' })).toBeVisible();
     await expect(page.getByText('链条计算器')).toHaveCount(0);
+  });
+
+  test('keeps the English gears calculator unchanged', async ({ page }) => {
+    await page.goto('/gears');
+    await page.waitForLoadState('networkidle');
+
+    await expect(
+      page.getByRole('heading', { name: 'Gears Calculator' }),
+    ).toBeVisible();
+    await expect(page.getByText('Parameters')).toBeVisible();
+    await expect(page.getByText('Gear 1 Teeth')).toBeVisible();
+    await expect(page.getByText('Gear 2 Teeth')).toBeVisible();
+    await expect(page.getByText('Matching COTS Gears')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Copy Link' })).toBeVisible();
+    await expect(page.getByText('齿轮计算器')).toHaveCount(0);
   });
 
   test('keeps the English linear calculator unchanged', async ({ page }) => {

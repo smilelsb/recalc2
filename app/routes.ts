@@ -19,6 +19,7 @@ export default [
   route('zh/belts', 'routes/zh/belts.tsx'),
   route('zh/chains', 'routes/zh/chains.tsx'),
   route('zh/flywheel', 'routes/zh/flywheel.tsx'),
+  route('zh/gears', 'routes/zh/gears.tsx'),
   route('zh/linear', 'routes/zh/linear.tsx'),
   route('zh/ratio', 'routes/zh/ratio.tsx'),
   route('zh/ratio-finder', 'routes/zh/ratio-finder.tsx'),
